@@ -19,8 +19,8 @@ function isPolindrom(example) {
 
 isPolindrom('121     121');
 
-
 //Функция для извлечения цифр из строки
+
 function getNumberOfString(arg) {
   const string = arg.toString();
   let result = '';
