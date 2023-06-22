@@ -80,7 +80,7 @@ const generateCommentsId = getIdGenerator();
 * @param {string} avatar - это строка, значение которой формируется по правилу img/avatar-{{случайное число от 1 до 6}}.svg
 * @param {string} message - сам комментарий
 * @param {string} name - имя пользователя оставившего комментарий
-* @param {[]} return arrayComments[] - возвращает массив комментариев
+* @param {Array} return arrayComments[] - возвращает массив комментариев
 */
 const generateCommentsToPhoto = () => {
   const arrayComments = [];
@@ -101,7 +101,7 @@ const generateCommentsToPhoto = () => {
 * @param {string} url - ссылка на фотографию
 * @param {string} description - описание фотографии
 * @param {int} likes - количество лайков
-* @param {[]} generateCommentsToPhoto() - массив комментариев
+* @param {Array} generateCommentsToPhoto() - массив комментариев
 */
 const getPhotoByUsers = () => ({
   id: generatePhotoId(),
