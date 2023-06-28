@@ -6,7 +6,7 @@
 const getTimeInMinutes = (time) => {
   const [hours, minutes] = time.split(':').map(Number);
   return hours * 60 + minutes;
-}
+};
 
 /**
  * Функция для проверки происходит ли встреча в рабочее время
@@ -19,5 +19,4 @@ const getTimeInMinutes = (time) => {
 const getWorkTimeMeeting = (startWork, endWork, startMeeting, timeMeeting) => getTimeInMinutes(startWork) <= getTimeInMinutes(startMeeting) &&
   getTimeInMinutes(startMeeting) <= (getTimeInMinutes(endWork) - timeMeeting);
 
-  getWorkTimeMeeting('08:00', '17:30', '14:00', 90);
-
+getWorkTimeMeeting('08:00', '17:30', '14:00', 90);
