@@ -30,5 +30,4 @@ const getIdGenerator = () => {
   };
 };
 
-
 export {getRandomInteger, getRandomElements, getIdGenerator};
