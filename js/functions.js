@@ -1,41 +1,23 @@
 /**
- * Функция для проверки длины строки
- * @param {string} string - исходная строка
- * @param {int} maxLength - длина для проверки
- * @param {boolean} - возвращает истину в случае если длина string меньше значения maxLength
+ * Функция для перевода времени на часах в минуты
+ * @param {string} time - исходное время
+ * @param {int} - возвращает значение в минутах
  */
-const isCheckingLength = (string, maxLength) => string.length <= maxLength;
-
-isCheckingLength('строка', 10);
-
-/**
- * Функция для проверки, является ли строка палиндромом
- * @param {string} example - исходная строка
- * @param {boolean} - возвращает истину в случае если строка является полиндромом
- */
-function isPolindrom(example) {
-  const string = example.replaceAll(' ', '').toUpperCase();
-  for (let i = 0; i < string.length / 2; i++) {
-    return string[i] === string[string.length - 1 - i];
-  }
+const getTimeInMinutes = (time) => {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
 }
 
-isPolindrom('121     121');
-
 /**
- * Функция для извлечения цифр из строки
- * @param {string} arg - исходная строка
- * @param {int}  parseInt - возвращает цифры из заданной строки arg
+ * Функция для проверки происходит ли встреча в рабочее время
+ * @param {int} startWork - начало рабочего времени
+ * @param {int} endWork - конец рабочего времени
+ * @param {int} startMetting - начало встречи
+ * @param {int} timeMeeting - время встречи
+ * @param {boolean} - возвращает значение была ли встреча в рабочее время
  */
-function getNumberOfString(arg) {
-  const string = arg.toString();
-  let result = '';
-  for (let i = 0; i < string.length; i++) {
-    if (!Number.isNaN(parseInt(string[i], 10))) {
-      result += string[i];
-    }
-  }
-  return parseInt(result, 10);
-}
+const getWorkTimeMeeting = (startWork, endWork, startMeeting, timeMeeting) => getTimeInMinutes(startWork) <= getTimeInMinutes(startMeeting) &&
+  getTimeInMinutes(startMeeting) <= (getTimeInMinutes(endWork) - timeMeeting);
 
-getNumberOfString('-1.2345');
+  getWorkTimeMeeting('08:00', '17:30', '14:00', 90);
+
