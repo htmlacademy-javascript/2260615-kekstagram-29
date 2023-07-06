@@ -5,7 +5,7 @@ const trumbnailTemplate = allTemplate.querySelector('.picture');
 //находим контейнер для фотографий других пользователей
 const container = document.querySelector('.pictures');
 
-//функция для заполнения шаблона
+//функция для создания шаблона
 const createTrumbnail = ({ url, description, likes, comments }) => {
   const trumbnail = trumbnailTemplate.cloneNode(true);
   const pictureImg = trumbnail.querySelector('.picture__img');
@@ -18,6 +18,7 @@ const createTrumbnail = ({ url, description, likes, comments }) => {
   return trumbnail;
 };
 
+//функция для заполнения шаблона
 const renderTrumbnails = (pictures) => {
   const fragment = document.createDocumentFragment();
 
