@@ -1,4 +1,4 @@
-import { getAllPhotoByUsers } from './data.js';
-import { renderThumbnails } from './thumbnail.js';
+import {getAllPhotoByUsers} from './data.js';
+import {renderGallery} from './galery.js';
 
-renderThumbnails(getAllPhotoByUsers());
+renderGallery(getAllPhotoByUsers());

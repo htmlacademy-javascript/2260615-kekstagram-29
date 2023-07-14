@@ -1,5 +1,5 @@
-import { renderThumbnails } from './thumbnail.js';
-import { openBigPicture } from './big-picture.js';
+import {renderThumbnails} from './thumbnail.js';
+import {openBigPicture} from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 
