@@ -31,12 +31,13 @@ const renderComments = (comments) => {
     const comment = createComment(item);
     fragment.append(comment);
   });
+  commentsListElement.append(fragment);
 };
 
 // функция для закрытия модального окна
 const closeBigPicture = () => {
-  bigPictureElement.classList.add('.hidden');
-  bodyElement.classList.remove('.modal-open');
+  bigPictureElement.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
 };
 
@@ -49,8 +50,7 @@ function onDocumentKeydown(evt) {
 }
 
 //функция для закрытия фото при нажатии кнопки
-const onDocumentTargetClick = () => {
-
+const onCancelTargetClick = () => {
   closeBigPicture();
 };
 
@@ -65,19 +65,18 @@ const renderPictureDetails = ({ url, likes, deskription }) => {
 
 //функция для открытия большой фотографии
 const openBigPicture = (data) => {
+
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
-  //commentsCountElement.classList.add('.hidden');
-  //commentsLoaderElement.classList.add('.hidden');
-  document.addEventListener('click', onDocumentKeydown);
-  document.addEventListener('click', onDocumentTargetClick);
+  commentsLoaderElement.classList.add('hidden');
+  commentsCountElement.classList.add('hidden');
+  document.addEventListener('keydown', onDocumentKeydown);
+  //document.addEventListener('click', onDocumentTargetClick);
 
   renderPictureDetails(data);
   renderComments(data.comments);
 };
 
-closeButtonClick.addEventListener('click', () => {
-  closeBigPicture();
-});
+closeButtonClick.addEventListener('click', onCancelTargetClick);
 
-export {openBigPicture};
+export { openBigPicture };
