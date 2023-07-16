@@ -22,7 +22,7 @@ const createComment = ({ avatar, name, message }) => {
   const avatarPicture = comment.querySelector('.social__picture');
   avatarPicture.src = avatar;
   avatarPicture.alt = name;
-  comment.queerySelector('.social__text').textContent = message;
+  comment.querySelector('.social__text').textContent = message;
 
   return comment;
 };
@@ -42,7 +42,8 @@ const renderComments = (comments) => {
   commentsCountElement.textContent = `${commentsShown} из ${commentsAllElement.textContent} комментариев`;
 
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsShown.length; i++) {
+
+  for (let i = 0; i < commentsShown; i++) {
     const comment = createComment(comments[i]);
     fragment.append(comment);
   }
@@ -76,23 +77,23 @@ const onCommentsLoadClick = (comments) => {
 };
 
 //функция заполнения деталей рисунка
-const renderPictureDetails = ({ url, likes, deskription }) => {
+const renderPictureDetails = ({ url, likes, description }) => {
   const bigPictureImg = bigPictureElement.querySelector('.big-picture__img img');
   bigPictureImg.src = url;
-  bigPictureImg.alt = deskription;
+  bigPictureImg.alt = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
-  bigPictureElement.querySelector('.social__caption').textContent = deskription;
+  bigPictureElement.querySelector('.social__caption').textContent = description;
 };
 
 //функция для открытия большой фотографии
-const openBigPicture = (data) => {
+const openBigPicture = (dataPicture) => {
   commentsListElement.innerHTML = '';
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  renderPictureDetails(data);
-  comments = data.comments;
-  commentsAllElement.textContent = data.comments.length;
+  renderPictureDetails(dataPicture);
+  comments = dataPicture.comments;
+  commentsAllElement.textContent = comments.length;
   onCommentsLoadClick(comments);
 };
 
