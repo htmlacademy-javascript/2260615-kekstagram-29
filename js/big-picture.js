@@ -34,10 +34,10 @@ const renderComments = (comments) => {
   if (commentsShown >= comments.length) {
     commentsLoaderElement.classList.add('hidden');
     commentsShown = comments.length;
-   }
+  }
   else {
     commentsLoaderElement.classList.remove('hidden');
-    }
+  }
 
   commentsCountElement.textContent = `${commentsShown} из ${commentsAllElement.textContent} комментариев`;
 
@@ -99,5 +99,6 @@ const openBigPicture = (dataPicture) => {
 
 closeButtonClick.addEventListener('click', onCancelTargetClick);
 commentsLoaderElement.addEventListener('click', onCommentsLoadClick);
+
 
 export { openBigPicture };
