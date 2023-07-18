@@ -73,8 +73,8 @@ const onCancelTargetClick = () => {
 };
 
 //функция на кнопку по добавлению комментариев
-const onCommentsLoadClick = (comments) => {
-  renderComments(comments);
+const onCommentsLoadClick = (dataComments) => {
+  renderComments(dataComments);
 };
 
 //функция заполнения деталей рисунка
