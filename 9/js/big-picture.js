@@ -2,7 +2,7 @@ const COMMENTS_PER_PORTION = 5;
 
 const bigPictureElement = document.querySelector('.big-picture'); //модалка
 const commentsListElement = bigPictureElement.querySelector('.social__comments'); //список комментов
-const commentItemElement = bigPictureElement.querySelector('.social__comment'); //один комментарий
+const commentItemElement = commentsListElement.querySelector('.social__comment'); //один комментарий
 const commentsCountElement = bigPictureElement.querySelector('.social__comment-count'); //количество коментов "5 из"
 const commentsAllElement = bigPictureElement.querySelector('.comments-count'); //всего комментариев "125"
 const bodyElement = document.querySelector('body');
@@ -22,30 +22,32 @@ const createComment = ({ avatar, name, message }) => {
   const avatarPicture = comment.querySelector('.social__picture');
   avatarPicture.src = avatar;
   avatarPicture.alt = name;
-  comment.queerySelector('.social__text').textContent = message;
+  comment.querySelector('.social__text').textContent = message;
 
   return comment;
 };
 
 //функция заполнения массива комментариев
-const renderComments = (comments) => {
+const renderComments = (сomments) => {
   commentsShown += COMMENTS_PER_PORTION;
 
-  if (commentsShown >= comments.length) {
+  if (commentsShown >= сomments.length) {
     commentsLoaderElement.classList.add('hidden');
-    commentsShown = comments.length;
-   }
-  else {
+    commentsShown = сomments.length;
+  } else{
     commentsLoaderElement.classList.remove('hidden');
-    }
+  }
 
   commentsCountElement.textContent = `${commentsShown} из ${commentsAllElement.textContent} комментариев`;
 
   const fragment = document.createDocumentFragment();
-  for (let i = 0; i < commentsShown.length; i++) {
-    const comment = createComment(comments[i]);
+  commentsListElement.innerHTML = '';
+
+  for (let i = 0; i < commentsShown; i++) {
+    const comment = createComment(сomments[i]);
     fragment.append(comment);
   }
+
   commentsListElement.append(fragment);
 };
 
@@ -71,32 +73,34 @@ const onCancelTargetClick = () => {
 };
 
 //функция на кнопку по добавлению комментариев
-const onCommentsLoadClick = (comments) => {
-  renderComments(comments);
+const onCommentsLoadClick = (dataComments) => {
+  renderComments(dataComments);
 };
 
 //функция заполнения деталей рисунка
-const renderPictureDetails = ({ url, likes, deskription }) => {
+const renderPictureDetails = ({ url, likes, description }) => {
   const bigPictureImg = bigPictureElement.querySelector('.big-picture__img img');
   bigPictureImg.src = url;
-  bigPictureImg.alt = deskription;
+  bigPictureImg.alt = description;
   bigPictureElement.querySelector('.likes-count').textContent = likes;
-  bigPictureElement.querySelector('.social__caption').textContent = deskription;
+  bigPictureElement.querySelector('.social__caption').textContent = description;
 };
 
 //функция для открытия большой фотографии
-const openBigPicture = (data) => {
+const openBigPicture = (dataPicture) => {
   commentsListElement.innerHTML = '';
   bigPictureElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
-  renderPictureDetails(data);
-  comments = data.comments;
-  commentsAllElement.textContent = data.comments.length;
+  renderPictureDetails(dataPicture);
+  comments = dataPicture.comments;
+  commentsAllElement.textContent = comments.length;
   onCommentsLoadClick(comments);
 };
 
 closeButtonClick.addEventListener('click', onCancelTargetClick);
-commentsLoaderElement.addEventListener('click', onCommentsLoadClick);
 
+commentsLoaderElement.addEventListener('click', () => {
+  onCommentsLoadClick(comments);
+});
 export { openBigPicture };
