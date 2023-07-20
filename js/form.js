@@ -42,7 +42,7 @@ const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTEG_COUN
 const hasUniqueTags = (value) => {
   const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
-  };
+};
 
 //добавление проверки в pristin на валидность
 pristine.addValidator(
@@ -108,11 +108,6 @@ function onDocumentKeydown(evt) {
     closeFormModal();
   }
 }
-
-//тоже не понятно зачем
-const onCloseFormModal = () => {
-  closeFormModal();
-};
 
 //открытие модального окна формы
 const openModalFormScript = () => {
