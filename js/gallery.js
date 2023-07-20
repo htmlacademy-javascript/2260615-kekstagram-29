@@ -9,6 +9,7 @@ const renderGallery = (pictures) => {
     if (!thumbnail) {
       return;
     }
+
     evt.preventDefault();
     const picture = pictures.find(
       (pictureItem) => pictureItem.id === +thumbnail.dataset.thumbnailId

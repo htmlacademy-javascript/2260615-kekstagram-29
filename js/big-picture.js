@@ -68,7 +68,7 @@ function onDocumentKeydown(evt) {
 }
 
 //функция для закрытия фото при нажатии кнопки
-const onCancelTargetClick = () => {
+const onCloseTargetClick = () => {
   closeBigPicture();
 };
 
@@ -98,9 +98,12 @@ const openBigPicture = (dataPicture) => {
   onCommentsLoadClick(comments);
 };
 
-closeButtonClick.addEventListener('click', onCancelTargetClick);
+//кнопка закрытия большой фотографии
+closeButtonClick.addEventListener('click', onCloseTargetClick);
 
+//кнопка для добавление 5 коментариев если загрузились не все
 commentsLoaderElement.addEventListener('click', () => {
   onCommentsLoadClick(comments);
 });
+
 export { openBigPicture };
