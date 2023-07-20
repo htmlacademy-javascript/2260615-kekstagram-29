@@ -1,5 +1,11 @@
-const VALID_SYMBOLS = 2;
+const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
+
+const textOfError = {
+  NOT_VALID_TAGS: 'Неправильная форма ввода',
+  NOT_VALID_COUNT: `Максимум ${MAX_HASHTEG_COUNT} хэштегов`,
+  NOT_UNIQUE: 'Повторяющиеся хэштеги',
+};
 
 const bodyElement = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
@@ -17,18 +23,53 @@ const pristine = new Pristine(form, {
 });
 
 /**
- * функция для создания массива
+ * функция для перевода строки в правильную форму
  * @param {string} tagString строка введенных данных
- * @param возвращает массив в правильной форме
+ * @param возвращает строку в правильной форме
  */
 const normalizeTags = (tagString) => tagString
-  .trin()
+  .trim()
   .split(' ')
   .filter((tag) => Boolean(tag.length));
 
+//проверка на валидность строки с хэштегом
 const hasValidTags = (value) => normalizeTags(value).every((tag) => VALID_SYMBOLS.test(tag));
 
+//проверка на количество хэштегов не более 5
 const hasValidCount = (value) => normalizeTags(value).length <= MAX_HASHTEG_COUNT;
+
+//проверка уникальность хэштегов
+const hasUniqueTags = (value) => {
+  const lowerCaseTags = normalizeTags(value).map((tag) => tag.toLowerCase());
+  return lowerCaseTags.length === new Set(lowerCaseTags).size;
+  };
+
+//добавление проверки в pristin на валидность
+pristine.addValidator(
+  textHashtags,
+  hasValidTags,
+  textOfError.NOT_VALID_TAGS,
+  2,
+  true
+);
+
+////добавление проверки в pristin на количество
+pristine.addValidator(
+  textHashtags,
+  hasValidCount,
+  textOfError.NOT_VALID_COUNT,
+  3,
+  true
+);
+
+//добавление проверки в pristine на уникальность
+pristine.addValidator(
+  textHashtags,
+  hasUniqueTags,
+  textOfError.NOT_UNIQUE,
+  1,
+  true
+);
 
 /**
  * функция для проверки находится ли фокус на текстовом поле
@@ -41,6 +82,7 @@ const isFocusField = (field) => document.activeElement === field;
 const closeFormModal = () => {
   form.reset();
   pristine.reset();
+
   overlayForm.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -72,6 +114,7 @@ const onCloseFormModal = () => {
   closeFormModal();
 };
 
+//открытие модального окна формы
 const openModalFormScript = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
