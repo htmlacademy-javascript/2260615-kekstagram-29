@@ -1,3 +1,5 @@
+import { resetScale } from './scale.js';
+
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
@@ -82,7 +84,7 @@ const isFocusField = (field) => document.activeElement === field;
 const closeFormModal = () => {
   form.reset();
   pristine.reset();
-
+  resetScale();
   overlayForm.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
