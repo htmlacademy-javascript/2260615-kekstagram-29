@@ -9,9 +9,10 @@ const renderGallery = (pictures) => {
     if (!thumbnail) {
       return;
     }
+
     evt.preventDefault();
     const picture = pictures.find(
-      (item) => item.id === +thumbnail.dataset.thumbnailId
+      (pictureItem) => pictureItem.id === +thumbnail.dataset.thumbnailId
     );
     openBigPicture(picture);
   });
