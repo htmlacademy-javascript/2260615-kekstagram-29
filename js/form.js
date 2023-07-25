@@ -1,4 +1,7 @@
-import { initSlider, resetUserPhotoEffects } from './effects.js';
+import {
+  init as initEffects,
+  reset as resetEffects
+} from './effects.js';
 import { resetScale } from './scale.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -86,7 +89,7 @@ const closeFormModal = () => {
   form.reset();
   pristine.reset();
   resetScale();
-  resetUserPhotoEffects();
+  resetEffects();
   overlayForm.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -98,7 +101,7 @@ const openFormModal = () => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   closeForm.addEventListener('click', closeFormModal);
-  initSlider();
+  initEffects();
 };
 
 //непонятная функция

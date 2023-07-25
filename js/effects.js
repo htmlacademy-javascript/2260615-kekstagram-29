@@ -36,7 +36,7 @@ const sliderEffects = {
 const modalElement = document.querySelector('.img-upload');
 const imageElement = modalElement.querySelector('.img-upload__preview img'); //to do (remove)
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
-const sliderElement = sliderContainerElement.querySelector('.effect-level__slider');
+const sliderElement = modalElement.querySelector('.effect-level__slider');
 const effectValueElement = modalElement.querySelector('.effect-level__value');
 const sliderEffectsList = modalElement.querySelector('.effects__list');
 
@@ -76,12 +76,12 @@ const showSlider = (effects) => {
  * Функция для сброса эффектов фильтра
  */
 const resetSliderEffects = () => {
-  sliderContainerElement.classList.add('hidden');
-  imageElement.style.filter = '';
-  effectValueElement.value = '';
   if (sliderElement.noUiSlider) {
     sliderElement.noUiSlider.destroy();
   }
+  sliderContainerElement.classList.add('hidden');
+  imageElement.style.filter = '';
+  effectValueElement.value = '';
 };
 
 /**
@@ -99,14 +99,14 @@ const onChangeEffect = (evt) => {
 /**
  * Функция для запуска работы кнопок масштабирования и слайдера
  */
-const initSlider = () => sliderEffectsList.addEventListener('change', onChangeEffect);
+const init = () => sliderEffectsList.addEventListener('change', onChangeEffect);
 
 /**
  * Функция возвращающая размер фото и значение фильтра по умолчанию
  */
-const resetUserPhotoEffects = () => {
+const reset = () => {
   resetSliderEffects();
   sliderEffectsList.removeEventListener('change', onChangeEffect);
 };
 
-export { initSlider, resetUserPhotoEffects };
+export { init, reset};
