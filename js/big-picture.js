@@ -1,3 +1,4 @@
+
 const COMMENTS_PER_PORTION = 5;
 
 const bigPictureElement = document.querySelector('.big-picture'); //модалка

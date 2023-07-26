@@ -1,3 +1,7 @@
+import {
+  init as initEffects,
+  reset as resetEffects
+} from './effects.js';
 import { resetScale } from './scale.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -21,8 +25,32 @@ const textComments = form.querySelector('.text__description');
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextClass: 'img-upload__field-wrapper--error', // to do css
+  errorTextClass: 'img-upload__field-wrapper--error',
 });
+
+//обработчик события отправки функции
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://29.javascript.pages.academy/kekstagram',
+        { method: 'POST',
+          body: formData,
+        },
+      )
+        .then(() => onSuccess())
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  });
+};
 
 /**
  * функция для перевода строки в правильную форму
@@ -85,6 +113,7 @@ const closeFormModal = () => {
   form.reset();
   pristine.reset();
   resetScale();
+  resetEffects();
   overlayForm.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
@@ -96,7 +125,9 @@ const openFormModal = () => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onDocumentKeydown);
   closeForm.addEventListener('click', closeFormModal);
+  initEffects();
 };
+
 
 //непонятная функция
 const onOpenFormModal = () => {
@@ -116,4 +147,4 @@ const openModalFormScript = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { openModalFormScript };
+export { openModalFormScript, setUserFormSubmit, closeFormModal };

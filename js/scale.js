@@ -1,19 +1,19 @@
-const SCALE_STEP = 25;
-const MIN_SCALE = 25;
-const MAX_SCALE = 100;
-const DEFAUL_SCALE = 100;
+const SCALE_STEP = 25; //to do (remove)
+const MIN_SCALE = 25; //to do (remove)
+const MAX_SCALE = 100; //to do (remove)
+const DEFAUL_SCALE = 100; //to do (remove)
 
 const modalElement = document.querySelector('.img-upload');
 const scaleValueField = modalElement.querySelector('.scale__control--value');
 const smallerButton = modalElement.querySelector('.scale__control--smaller');
 const biggerButton = modalElement.querySelector('.scale__control--bigger');
-const imageElement = modalElement.querySelector('.img-upload__preview img');
+const imageElement = modalElement.querySelector('.img-upload__preview img'); //to do (remove)
 
 //функция для изменения масштаба изображения
 const scaleValue = (value) => {
   imageElement.style.transform = `scale(${value / 100})`;
   scaleValueField.value = `${value}%`;
-}
+};
 
 //функция для кнопки уменьшения массштаба изображения
 const onSmallerButtonClick = () => {
