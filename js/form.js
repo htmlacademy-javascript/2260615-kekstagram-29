@@ -3,7 +3,7 @@ import { resetScale } from './scale.js';
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
-const textOfError = {
+const TextOfError = {
   NOT_VALID_TAGS: 'Неправильная форма ввода',
   NOT_VALID_COUNT: `Максимум ${MAX_HASHTEG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Повторяющиеся хэштеги',
@@ -50,7 +50,7 @@ const hasUniqueTags = (value) => {
 pristine.addValidator(
   textHashtags,
   hasValidTags,
-  textOfError.NOT_VALID_TAGS,
+  TextOfError.NOT_VALID_TAGS,
   2,
   true
 );
@@ -59,7 +59,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasValidCount,
-  textOfError.NOT_VALID_COUNT,
+  TextOfError.NOT_VALID_COUNT,
   3,
   true
 );
@@ -68,7 +68,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasUniqueTags,
-  textOfError.NOT_UNIQUE,
+  TextOfError.NOT_UNIQUE,
   1,
   true
 );
