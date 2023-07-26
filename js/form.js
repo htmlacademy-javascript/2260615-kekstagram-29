@@ -28,6 +28,30 @@ const pristine = new Pristine(form, {
   errorTextClass: 'img-upload__field-wrapper--error',
 });
 
+//обработчик события отправки функции
+const setUserFormSubmit = (onSuccess) => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+
+    if (isValid) {
+      const formData = new FormData(evt.target);
+
+      fetch(
+        'https://29.javascript.pages.academy/kekstagram',
+        { method: 'POST',
+          body: formData,
+        },
+      )
+        .then(() => onSuccess())
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  });
+};
+
 /**
  * функция для перевода строки в правильную форму
  * @param {string} tagString строка введенных данных
@@ -123,4 +147,4 @@ const openModalFormScript = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { openModalFormScript };
+export { openModalFormScript, setUserFormSubmit, closeFormModal };
