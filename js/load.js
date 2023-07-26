@@ -20,7 +20,7 @@ const TextOfError = {
  * @param {object} body заголовок
  * @param возвращает результат извлечения данных
  */
-const load = (route, textOfError, method, body) =>
+const load = (route, textOfError, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
   .then((response) => {
     if(!response.ok) {
@@ -33,8 +33,7 @@ const load = (route, textOfError, method, body) =>
   });
 
   //функция получения данных
-  const getData = () =>
-  load(Route.GET_DATA, TextOfError.GET_DATA,  Method.GET,  body = 'null');
+  const getData = () => load(Route.GET_DATA, TextOfError.GET_DATA);
 
   //функция отправки данных
   const sendData = (body) =>
