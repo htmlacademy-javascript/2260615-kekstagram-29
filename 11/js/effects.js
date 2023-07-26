@@ -4,12 +4,14 @@ const sliderEffects = {
     min: 0,
     max: 1,
     step: 0.1,
+    unit: '',
   },
   sepia: {
     name: 'sepia',
     min: 0,
     max: 1,
     step: 0.1,
+    unit: '',
   },
   marvin: {
     name: 'invert',
@@ -30,6 +32,7 @@ const sliderEffects = {
     min: 1,
     max: 3,
     step: 0.1,
+    unit: '',
   },
 };
 
