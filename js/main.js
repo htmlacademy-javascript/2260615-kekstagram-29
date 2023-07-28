@@ -1,4 +1,3 @@
-//import { getAllPhotoByUsers } from './data.js';
 import { renderGallery } from './gallery.js';
 import { addOverlayListener, blockSubmitButton, unBlockSubmitButton, closeFormModal, pristine } from './form.js';
 import { getData, sendData } from './load.js';

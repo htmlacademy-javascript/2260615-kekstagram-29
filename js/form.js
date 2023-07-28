@@ -1,18 +1,16 @@
-import { initEffects, resetEffects } from './effects.js';
+import {
+  init as initEffects,
+  reset as resetEffects
+} from './effects.js';
 import { resetScale } from './scale.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
-const textOfError = {
+const TextOfError = {
   NOT_VALID_TAGS: 'Неправильная форма ввода',
   NOT_VALID_COUNT: `Максимум ${MAX_HASHTEG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Повторяющиеся хэштеги',
-};
-
-const SubmitButtonText = {
-  IDLE: 'Сохранить',
-  SENDING: 'Сохраняю...',
 };
 
 const bodyElement = document.querySelector('body');
@@ -22,7 +20,6 @@ const closeForm = form.querySelector('.img-upload__cancel');
 const uploadFile = form.querySelector('.img-upload__input');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
-const submitButton = form.querySelector('.img-upload__submit');
 
 //функция пристин задает правила для form
 const pristine = new Pristine(form, {
@@ -57,7 +54,7 @@ const hasUniqueTags = (value) => {
 pristine.addValidator(
   textHashtags,
   hasValidTags,
-  textOfError.NOT_VALID_TAGS,
+  TextOfError.NOT_VALID_TAGS,
   2,
   true
 );
@@ -66,7 +63,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasValidCount,
-  textOfError.NOT_VALID_COUNT,
+  TextOfError.NOT_VALID_COUNT,
   3,
   true
 );
@@ -75,7 +72,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasUniqueTags,
-  textOfError.NOT_UNIQUE,
+  TextOfError.NOT_UNIQUE,
   1,
   true
 );
@@ -121,23 +118,9 @@ function onDocumentKeydown(evt) {
   }
 }
 
-//функция для блокировки кнопки отправки формы при не валидности
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = SubmitButtonText.SENDING;
-  submitButton.style.background = '#ffffff';
-};
-
-//функция для разблокировки кнопки отправки формы при валидности
-const unBlockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = SubmitButtonText.IDLE;
-  submitButton.style.background = '#000000';
-};
-
 //открытие модального окна формы
 const addOverlayListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { addOverlayListener, blockSubmitButton, unBlockSubmitButton, pristine, closeFormModal };
+export { addOverlayListener, setUserFormSubmit, closeFormModal };
