@@ -1,16 +1,18 @@
-import {
-  init as initEffects,
-  reset as resetEffects
-} from './effects.js';
+import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
-const TextOfError = {
+const textOfError = {
   NOT_VALID_TAGS: 'Неправильная форма ввода',
   NOT_VALID_COUNT: `Максимум ${MAX_HASHTEG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Повторяющиеся хэштеги',
+};
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...',
 };
 
 const bodyElement = document.querySelector('body');
@@ -20,6 +22,7 @@ const closeForm = form.querySelector('.img-upload__cancel');
 const uploadFile = form.querySelector('.img-upload__input');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 //функция пристин задает правила для form
 const pristine = new Pristine(form, {
@@ -27,30 +30,6 @@ const pristine = new Pristine(form, {
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error',
 });
-
-//обработчик события отправки функции
-const setUserFormSubmit = (onSuccess) => {
-  form.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-
-    const isValid = pristine.validate();
-
-    if (isValid) {
-      const formData = new FormData(evt.target);
-
-      fetch(
-        'https://29.javascript.pages.academy/kekstagram',
-        { method: 'POST',
-          body: formData,
-        },
-      )
-        .then(() => onSuccess())
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  });
-};
 
 /**
  * функция для перевода строки в правильную форму
@@ -78,7 +57,7 @@ const hasUniqueTags = (value) => {
 pristine.addValidator(
   textHashtags,
   hasValidTags,
-  TextOfError.NOT_VALID_TAGS,
+  textOfError.NOT_VALID_TAGS,
   2,
   true
 );
@@ -87,7 +66,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasValidCount,
-  TextOfError.NOT_VALID_COUNT,
+  textOfError.NOT_VALID_COUNT,
   3,
   true
 );
@@ -96,7 +75,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasUniqueTags,
-  TextOfError.NOT_UNIQUE,
+  textOfError.NOT_UNIQUE,
   1,
   true
 );
@@ -142,9 +121,23 @@ function onDocumentKeydown(evt) {
   }
 }
 
+//функция для блокировки кнопки отправки формы при не валидности
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+  submitButton.style.background = '#ffffff';
+};
+
+//функция для разблокировки кнопки отправки формы при валидности
+const unBlockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButton.style.background = '#000000';
+};
+
 //открытие модального окна формы
-const openModalFormScript = () => {
+const addOverlayListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { openModalFormScript, setUserFormSubmit, closeFormModal };
+export { addOverlayListener, blockSubmitButton, unBlockSubmitButton, pristine, closeFormModal };

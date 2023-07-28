@@ -102,14 +102,14 @@ const onChangeEffect = (evt) => {
 /**
  * Функция для запуска работы кнопок масштабирования и слайдера
  */
-const init = () => sliderEffectsList.addEventListener('change', onChangeEffect);
+const initEffects = () => sliderEffectsList.addEventListener('change', onChangeEffect);
 
 /**
  * Функция возвращающая размер фото и значение фильтра по умолчанию
  */
-const reset = () => {
+const resetEffects = () => {
   resetSliderEffects();
   sliderEffectsList.removeEventListener('change', onChangeEffect);
 };
 
-export { init, reset};
+export { initEffects, resetEffects };

@@ -22,21 +22,21 @@ const TextOfError = {
  */
 const load = (route, textOfError, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
-  .then((response) => {
-    if(!response.ok) {
-      throw new Error();
-    }
-    return response.json();
-  })
-  .catch(() => {
-    throw new Error(textOfError);
-  });
+    .then((response) => {
+      if(!response.ok) {
+        throw new Error();
+      }
+      return response.json();
+    })
+    .catch(() => {
+      throw new Error(textOfError);
+    });
 
-  //функция получения данных
-  const getData = () => load(Route.GET_DATA, TextOfError.GET_DATA);
+//функция получения данных
+const getData = () => load(Route.GET_DATA, TextOfError.GET_DATA);
 
-  //функция отправки данных
-  const sendData = (body) =>
+//функция отправки данных
+const sendData = (body) =>
   load(Route.SEND_DATA, TextOfError.SEND_DATA, Method.POST, body);
 
-  export { getData, sendData };
+export { getData, sendData };

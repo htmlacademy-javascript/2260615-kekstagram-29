@@ -1,30 +1,31 @@
-import { getAllPhotoByUsers } from './data.js';
+//import { getAllPhotoByUsers } from './data.js';
 import { renderGallery } from './gallery.js';
-import { openModalFormScript, setUserFormSubmit, closeFormModal } from './form.js';
+import { addOverlayListener, blockSubmitButton, unBlockSubmitButton, closeFormModal, pristine } from './form.js';
 import { getData, sendData } from './load.js';
+import { showSuccessMessage, showErrorMessage, showAlert } from './message.js';
 
-const showAllert = (err) => {
-  console.log(err);
-};
+const setOnFormSubmit = async (evt) => {
+  evt.preventDefault();
 
-setOnFormSubmit(async (data) => {
-  try {
-    await sendData(data);
-    openModalFormScript();
-    showSuccessMessage();
-    }  catch {
+  if (!pristine.validate()) {
+    blockSubmitButton();
+    try {
+      await sendData(new FormData(evt.target));
+      showSuccessMessage();
+      closeFormModal();
+    } catch {
       showErrorMessage();
+    }
+    unBlockSubmitButton();
   }
-});
-
+};
 
 try {
   const data = await getData();
   renderGallery(data);
 } catch (err) {
-  showAllert(err.message);
+  showAlert(err.message);
 }
 
-openModalFormScript();
-
-setUserFormSubmit(closeFormModal);
+addOverlayListener();
+setOnFormSubmit();
