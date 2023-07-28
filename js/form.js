@@ -1,16 +1,20 @@
-import {
-  init as initEffects,
-  reset as resetEffects
-} from './effects.js';
+import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { sendData } from './load.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
-const TextOfError = {
+const textOfError = {
   NOT_VALID_TAGS: 'Неправильная форма ввода',
   NOT_VALID_COUNT: `Максимум ${MAX_HASHTEG_COUNT} хэштегов`,
   NOT_UNIQUE: 'Повторяющиеся хэштеги',
+};
+
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...',
 };
 
 const bodyElement = document.querySelector('body');
@@ -20,6 +24,7 @@ const closeForm = form.querySelector('.img-upload__cancel');
 const uploadFile = form.querySelector('.img-upload__input');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 //функция пристин задает правила для form
 const pristine = new Pristine(form, {
@@ -54,7 +59,7 @@ const hasUniqueTags = (value) => {
 pristine.addValidator(
   textHashtags,
   hasValidTags,
-  TextOfError.NOT_VALID_TAGS,
+  textOfError.NOT_VALID_TAGS,
   2,
   true
 );
@@ -63,7 +68,7 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasValidCount,
-  TextOfError.NOT_VALID_COUNT,
+  textOfError.NOT_VALID_COUNT,
   3,
   true
 );
@@ -72,10 +77,15 @@ pristine.addValidator(
 pristine.addValidator(
   textHashtags,
   hasUniqueTags,
-  TextOfError.NOT_UNIQUE,
+  textOfError.NOT_UNIQUE,
   1,
   true
 );
+
+//добавления валидатора для форм
+const addValidatorToForm = () => {
+  pristine;
+};
 
 /**
  * функция для проверки находится ли фокус на текстовом поле
@@ -116,11 +126,42 @@ function onDocumentKeydown(evt) {
     evt.preventDefault();
     closeFormModal();
   }
-}
+};
+
+//функция для блокировки кнопки отправки формы при не валидности
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+  submitButton.style.background = '#ffffff';
+};
+
+//функция для разблокировки кнопки отправки формы при валидности
+const unBlockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+  submitButton.style.background = '#000000';
+};
+
+//хэндлер
+const addHandlerToForm = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    if (!pristine.validate()) {
+      blockSubmitButton();
+      sendData(new FormData(form), () => {
+        showSuccessMessage();
+        closeFormModal();
+      },
+        showErrorMessage());
+        unBlockSubmitButton();
+    }
+  });
+  };
 
 //открытие модального окна формы
-const addOverlayListener = () => {
+const addHandlerToListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { addOverlayListener, setUserFormSubmit, closeFormModal };
+export { addHandlerToListener, addHandlerToForm, closeFormModal, addValidatorToForm };

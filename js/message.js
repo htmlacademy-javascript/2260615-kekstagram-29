@@ -20,11 +20,6 @@ const showAlert = (message) => {
   }, TIME_OF_SHOW_ALERT);
 };
 
-setTimeout(() => {
-  alert.remove();
-}, TIME_OF_SHOW_ALERT);
-
-
 //сообщение об успешной или неудачной отправки формы
 function showSuccessMessage() {
   console.log('Успешно отправлено');
