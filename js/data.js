@@ -52,18 +52,18 @@ const generateCommentsId = getIdGenerator();
   * @param {string} name - имя пользователя оставившего комментарий
   * @param {Array} return arrayComments[] - возвращает массив комментариев
 */
-const generateCommentsToPhoto = () => {
-  const arrayComments = [];
-  for (let i = 0; i < getRandomInteger(NumberOfAllComments.MIN, NumberOfAllComments.MAX); i++) {
-    arrayComments.push ({
-      id: generateCommentsId(),
-      avatar: `img/avatar-${getRandomInteger(NumberOfAllAvatar.MIN, NumberOfAllAvatar.MAX)}.svg`,
-      message: getRandomElements(MESSAGES),
-      name: getRandomElements(USERS_NAME),
-    });
-  }
-  return arrayComments;
-};
+// const generateCommentsToPhoto = () => {
+//   const arrayComments = [];
+//   for (let i = 0; i < getRandomInteger(NumberOfAllComments.MIN, NumberOfAllComments.MAX); i++) {
+//     arrayComments.push ({
+//       id: generateCommentsId(),
+//       avatar: `img/avatar-${getRandomInteger(NumberOfAllAvatar.MIN, NumberOfAllAvatar.MAX)}.svg`,
+//       message: getRandomElements(MESSAGES),
+//       name: getRandomElements(USERS_NAME),
+//     });
+//   }
+//   return arrayComments;
+// };
 
 /**
   * Функция для создания объекта с описанием фотографии
@@ -73,13 +73,13 @@ const generateCommentsToPhoto = () => {
   * @param {int} likes - количество лайков
   * @param {Array} generateCommentsToPhoto() - массив комментариев
 */
-const getPhotoByUsers = () => ({
-  id: generatePhotoId(),
-  url: `photos/${generatePhotoUrl()}.jpg`,
-  description: getRandomElements(DESCRIPTIONS_PHOTO),
-  likes: getRandomInteger(NumberOfLikes.MIN, NumberOfLikes.MAX),
-  comments: generateCommentsToPhoto(),
-});
+// const getPhotoByUsers = () => ({
+//   id: generatePhotoId(),
+//   url: `photos/${generatePhotoUrl()}.jpg`,
+//   description: getRandomElements(DESCRIPTIONS_PHOTO),
+//   likes: getRandomInteger(NumberOfLikes.MIN, NumberOfLikes.MAX),
+//   comments: generateCommentsToPhoto(),
+// });
 
 /**
   * Функция для создания массива объектов размером NUMBER_OF_ALL_PHOTO с описанием фотографий
