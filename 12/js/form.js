@@ -1,5 +1,7 @@
 import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { sendData } from './load.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
@@ -11,7 +13,7 @@ const textOfError = {
 };
 
 const SubmitButtonText = {
-  IDLE: 'Сохранить',
+  IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...',
 };
 
@@ -80,6 +82,8 @@ pristine.addValidator(
   true
 );
 
+//добавления валидатора для форм
+//const addValidatorToForm = () => pristine();
 /**
  * функция для проверки находится ли фокус на текстовом поле
  * @param {string} field текстовое поле для проверки
@@ -125,19 +129,38 @@ function onDocumentKeydown(evt) {
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
-  submitButton.style.background = '#ffffff';
 };
 
 //функция для разблокировки кнопки отправки формы при валидности
 const unBlockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
-  submitButton.style.background = '#000000';
+};
+
+//хэндлер
+const addHandlerToForm = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+
+    if (!pristine.validate()) {
+      blockSubmitButton();
+      showErrorMessage();
+    } else {
+      unBlockSubmitButton();
+      sendData(new FormData(form),
+        () => {
+          showSuccessMessage();
+        },
+      );
+    }
+    closeFormModal();
+  });
 };
 
 //открытие модального окна формы
-const addOverlayListener = () => {
+const addHandlerToListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { addOverlayListener, blockSubmitButton, unBlockSubmitButton, pristine, closeFormModal };
+export { addHandlerToListener, addHandlerToForm, closeFormModal };

@@ -20,23 +20,30 @@ const TextOfError = {
  * @param {object} body заголовок
  * @param возвращает результат извлечения данных
  */
-const load = (route, textOfError, method = Method.GET, body = null) =>
+const load = (onSuccess, onError) => (route, textOfError, method = Method.GET, body = null) =>
   fetch(`${BASE_URL}${route}`, {method, body})
+
     .then((response) => {
       if(!response.ok) {
-        throw new Error();
+        throw new Error(response.statusText);
       }
       return response.json();
     })
-    .catch(() => {
-      throw new Error(textOfError);
+    .then ((data) => {
+      onSuccess(data);
+    })
+    .catch((err) => {
+      if (err) {
+        return onError(textOfError);
+      }
     });
 
+
 //функция получения данных
-const getData = () => load(Route.GET_DATA, TextOfError.GET_DATA);
+const getData = (onSuccess, onError) => load(onSuccess, onError)(Route.GET_DATA, TextOfError.GET_DATA);
 
 //функция отправки данных
-const sendData = (body) =>
-  load(Route.SEND_DATA, TextOfError.SEND_DATA, Method.POST, body);
+const sendData = (body, onSuccess, onError) =>
+  load(body, onSuccess, onError)(Route.SEND_DATA, TextOfError.SEND_DATA, Method.POST, body);
 
 export { getData, sendData };
