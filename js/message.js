@@ -1,16 +1,20 @@
 // showAllert функция
-const TIME_OF_SHOW_ALERT = 3000;
+const TIME_OF_SHOW_ALERT = 5000;
+const TypeOfMessage = {
+  SUCCESS: '#008000',
+  ERROR: '#ff4e4e',
+};
 
-const showAlert = (message) => {
+const showAlert = (message, type = TypeOfMessage.ERROR) => {
   const alert = document.createElement('div');
   alert.style.position = 'absolute';
   alert.style.zIndex = '100';
   alert.style.top = '0';
   alert.style.left = '0';
   alert.style.right = '0';
-  alert.style.padding = '10px 3px';
+  alert.style.padding = '20px 3px';
   alert.style.textAlign = 'center';
-  alert.style.backgroundColor = '#ff4e4e';
+  alert.style.backgroundColor = type;
   alert.style.fontSize = '20px';
   alert.textContent = message;
   document.body.append(alert);
@@ -20,13 +24,14 @@ const showAlert = (message) => {
   }, TIME_OF_SHOW_ALERT);
 };
 
+
 //сообщение об успешной или неудачной отправки формы
-function showSuccessMessage() {
-  console.log('Успешно отправлено');
-}
+const showSuccessMessage = () => {
+  showAlert('Успешно отправлено', TypeOfMessage.SUCCESS);
+};
 
 const showErrorMessage = () =>{
-  console.log('Произошла ошибка');
+  showAlert('Произошла ошибка');
 };
 
 export {showSuccessMessage, showErrorMessage, showAlert};

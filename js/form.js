@@ -13,7 +13,7 @@ const textOfError = {
 };
 
 const SubmitButtonText = {
-  IDLE: 'Сохранить',
+  IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...',
 };
 
@@ -83,10 +83,7 @@ pristine.addValidator(
 );
 
 //добавления валидатора для форм
-const addValidatorToForm = () => {
-  pristine;
-};
-
+//const addValidatorToForm = () => pristine();
 /**
  * функция для проверки находится ли фокус на текстовом поле
  * @param {string} field текстовое поле для проверки
@@ -126,42 +123,44 @@ function onDocumentKeydown(evt) {
     evt.preventDefault();
     closeFormModal();
   }
-};
+}
 
 //функция для блокировки кнопки отправки формы при не валидности
 const blockSubmitButton = () => {
   submitButton.disabled = true;
   submitButton.textContent = SubmitButtonText.SENDING;
-  submitButton.style.background = '#ffffff';
 };
 
 //функция для разблокировки кнопки отправки формы при валидности
 const unBlockSubmitButton = () => {
   submitButton.disabled = false;
   submitButton.textContent = SubmitButtonText.IDLE;
-  submitButton.style.background = '#000000';
 };
 
 //хэндлер
 const addHandlerToForm = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
+    pristine.validate();
 
     if (!pristine.validate()) {
       blockSubmitButton();
-      sendData(new FormData(form), () => {
-        showSuccessMessage();
-        closeFormModal();
-      },
-        showErrorMessage());
-        unBlockSubmitButton();
+      showErrorMessage();
+    } else {
+      unBlockSubmitButton();
+      sendData(new FormData(form),
+        () => {
+          showSuccessMessage();
+        },
+      );
     }
+    closeFormModal();
   });
-  };
+};
 
 //открытие модального окна формы
 const addHandlerToListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { addHandlerToListener, addHandlerToForm, closeFormModal, addValidatorToForm };
+export { addHandlerToListener, addHandlerToForm, closeFormModal };
