@@ -111,7 +111,6 @@ const openFormModal = () => {
   initEffects();
 };
 
-
 //непонятная функция
 const onOpenFormModal = () => {
   openFormModal();

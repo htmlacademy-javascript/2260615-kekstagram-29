@@ -1,10 +1,10 @@
-// showAllert функция
 const TIME_OF_SHOW_ALERT = 5000;
 const TypeOfMessage = {
   SUCCESS: '#008000',
   ERROR: '#ff4e4e',
 };
 
+// showAllert функция
 const showAlert = (message, type = TypeOfMessage.ERROR) => {
   const alert = document.createElement('div');
   alert.style.position = 'absolute';

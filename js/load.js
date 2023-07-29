@@ -44,6 +44,6 @@ const getData = (onSuccess, onError) => load(onSuccess, onError)(Route.GET_DATA,
 
 //функция отправки данных
 const sendData = (body, onSuccess, onError) =>
-  load(body, onSuccess, onError)(Route.SEND_DATA, TextOfError.SEND_DATA, Method.POST, body);
+  load(onSuccess, onError)(Route.SEND_DATA, TextOfError.SEND_DATA, Method.POST, body);
 
 export { getData, sendData };
