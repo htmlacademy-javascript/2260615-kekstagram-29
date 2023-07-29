@@ -1,7 +1,9 @@
-import { getAllPhotoByUsers } from './data.js';
+//import { getAllPhotoByUsers } from './data.js';
 import { renderGallery } from './gallery.js';
-import { openModalFormScript } from './form.js';
+import { addHandlerToListener, addHandlerToForm } from './form.js';
+import { getData } from './load.js';
+import { showAlert } from './message.js';
 
-openModalFormScript();
-renderGallery(getAllPhotoByUsers());
-
+getData(renderGallery, showAlert);
+addHandlerToForm();
+addHandlerToListener();

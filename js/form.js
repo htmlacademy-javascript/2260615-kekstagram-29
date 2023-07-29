@@ -1,8 +1,7 @@
-import {
-  init as initEffects,
-  reset as resetEffects
-} from './effects.js';
+import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
+import { showSuccessMessage, showErrorMessage } from './message.js';
+import { sendData } from './load.js';
 
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
@@ -13,6 +12,11 @@ const textOfError = {
   NOT_UNIQUE: 'Повторяющиеся хэштеги',
 };
 
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Сохраняю...',
+};
+
 const bodyElement = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
 const overlayForm = form.querySelector('.img-upload__overlay');
@@ -20,6 +24,7 @@ const closeForm = form.querySelector('.img-upload__cancel');
 const uploadFile = form.querySelector('.img-upload__input');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
+const submitButton = form.querySelector('.img-upload__submit');
 
 //функция пристин задает правила для form
 const pristine = new Pristine(form, {
@@ -77,6 +82,8 @@ pristine.addValidator(
   true
 );
 
+//добавления валидатора для форм
+//const addValidatorToForm = () => pristine();
 /**
  * функция для проверки находится ли фокус на текстовом поле
  * @param {string} field текстовое поле для проверки
@@ -118,9 +125,42 @@ function onDocumentKeydown(evt) {
   }
 }
 
+//функция для блокировки кнопки отправки формы при не валидности
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = SubmitButtonText.SENDING;
+};
+
+//функция для разблокировки кнопки отправки формы при валидности
+const unBlockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = SubmitButtonText.IDLE;
+};
+
+//хэндлер
+const addHandlerToForm = () => {
+  form.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+
+    if (!pristine.validate()) {
+      blockSubmitButton();
+      showErrorMessage();
+    } else {
+      unBlockSubmitButton();
+      sendData(new FormData(form),
+        () => {
+          showSuccessMessage();
+        },
+      );
+    }
+    closeFormModal();
+  });
+};
+
 //открытие модального окна формы
-const openModalFormScript = () => {
+const addHandlerToListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { openModalFormScript };
+export { addHandlerToListener, addHandlerToForm, closeFormModal };
