@@ -2,6 +2,7 @@ import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 import { sendData } from './load.js';
+import { isEscapeKey } from './util.js';
 
 const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
@@ -121,7 +122,7 @@ const onOpenFormModal = () => {
 
 // функция для  закрытия модального окна (Esc) если нету фокуса на полях хэштега и комментариев
 function onDocumentKeydown(evt) {
-  if (evt.key === 'Escape' && !isFocusField(textHashtags) && !isFocusField(textComments)) {
+  if (isEscapeKey && !isFocusField(textHashtags) && !isFocusField(textComments)) {
     evt.preventDefault();
     closeFormModal();
   }
@@ -144,8 +145,8 @@ const addHandlerToForm = () => {
   form.addEventListener('submit', (evt) => {
     evt.preventDefault();
     pristine.validate();
-
-    if (!pristine.validate()) {
+    const isValid = pristine.validate();
+    if (!isValid) {
       blockSubmitButton();
       showErrorMessage();
     } else {
@@ -153,11 +154,11 @@ const addHandlerToForm = () => {
       sendData(new FormData(form),
         () => {
           showSuccessMessage();
+          closeFormModal();
         },
       );
     }
     unBlockSubmitButton();
-    closeFormModal();
   });
 };
 
