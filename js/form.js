@@ -153,6 +153,7 @@ const addHandlerToForm = () => {
         },
       );
     }
+    unBlockSubmitButton();
     closeFormModal();
   });
 };

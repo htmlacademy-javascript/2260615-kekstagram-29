@@ -32,7 +32,7 @@ const load = (onSuccess, onError) => (route, textOfError, method = Method.GET, b
     .then ((data) => {
       onSuccess(data);
     })
-    .catch((err) => {
+    .catch(() => {
       onError(textOfError);
     });
 

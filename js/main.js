@@ -5,12 +5,12 @@ import { showAlert } from './message.js';
 import { debounce } from './util.js';
 import { initFilter } from './filters.js';
 
-const cb1 = (dataPictures) => {
+const toRenderAndInit = (dataPictures) => {
   renderGallery(dataPictures);
   initFilter(dataPictures, debounce(renderGallery));
 };
 
-getData(cb1, showAlert);
+getData(toRenderAndInit, showAlert);
 
 addHandlerToForm();
 
