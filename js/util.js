@@ -11,23 +11,12 @@ const getRandomInteger = (a, b) => {
   return Math.floor(result);
 };
 
-/**
-  * Функция для генерации случайного элемента массива
-  * @param {int} element - сам массив
-  * @param {string} result - элемент массива element
- */
-const getRandomElements = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-/**
-  * Функция для генерации порядкого номера
-  * @param {int} result - порядковый номер
- */
-const getIdGenerator = () => {
-  let firstGenerateId = 0;
-  return function () {
-    firstGenerateId += 1;
-    return firstGenerateId;
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeOutID;
+  return (...rest) => {
+    clearTimeout(timeOutID);
+    timeOutID = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
 
-export {getRandomInteger, getRandomElements, getIdGenerator};
+export {getRandomInteger, debounce};
