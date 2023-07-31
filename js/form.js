@@ -183,4 +183,4 @@ const addHandlerToListener = () => {
   uploadFile.addEventListener('change', onOpenFormModal);
 };
 
-export { addHandlerToListener, addHandlerToForm, closeFormModal };
+export { addHandlerToListener, addHandlerToForm, closeFormModal, onDocumentKeydown };
