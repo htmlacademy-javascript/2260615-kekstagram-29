@@ -87,7 +87,6 @@ pristine.addValidator(
 );
 
 //добавления валидатора для форм
-//const addValidatorToForm = () => pristine();
 /**
  * функция для проверки находится ли фокус на текстовом поле
  * @param {string} field текстовое поле для проверки
@@ -115,7 +114,7 @@ const openFormModal = () => {
   initEffects();
 };
 
-//непонятная функция
+//функция
 const onOpenFormModal = () => {
   openFormModal();
 };
@@ -162,6 +161,7 @@ const addHandlerToForm = () => {
   });
 };
 
+//функция для показа гагруженной фотографии
 const showUploadPicture = () => {
   const file = uploadFile.files[0];
   const fileName = file.name.toLowerCase();
