@@ -3,12 +3,11 @@ import { addHandlerToListener, addHandlerToForm } from './form.js';
 import { getData } from './load.js';
 import { showAlert } from './message.js';
 import { debounce } from './util.js';
-import { initFilter, getFilteredByPictires } from './filters.js';
+import { initFilter } from './filters.js';
 
 const cb1 = (dataPictures) => {
-  renderGallery(getFilteredByPictires());
+  renderGallery(dataPictures);
   initFilter(dataPictures, debounce(renderGallery));
-  renderGallery(getFilteredByPictires());
 };
 
 getData(cb1, showAlert);

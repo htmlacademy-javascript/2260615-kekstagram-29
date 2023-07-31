@@ -2,7 +2,7 @@ import { renderThumbnails } from './thumbnail.js';
 import { openBigPicture } from './big-picture.js';
 
 const container = document.querySelector('.pictures');
-const pictures = [];
+let pictures = [];
 
 const addToRenderGallery = (evt) => {
   const thumbnail = evt.target.closest('[data-thumbnail-id]');

@@ -24,8 +24,8 @@ const getFilteredByPictires = () => {
       return [...pictures].sort(sortByMoreDiscissed);
     case Filters.DEFAULT:
       return [...pictures];
+  }
 };
-}
 
 //функция для изменения фильтра при клике
 const setOnFilterClick = (callback) => {
@@ -55,4 +55,4 @@ const initFilter = (loadedPictures, callback) => {
   setOnFilterClick(callback);
 };
 
-export { initFilter, getFilteredByPictires,  setOnFilterClick };
+export { initFilter, getFilteredByPictires, setOnFilterClick };
