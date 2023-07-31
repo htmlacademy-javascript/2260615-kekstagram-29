@@ -37,7 +37,7 @@ const sliderEffects = {
 };
 
 const modalElement = document.querySelector('.img-upload');
-const imageElement = modalElement.querySelector('.img-upload__preview img'); //to do (remove)
+const imageElement = modalElement.querySelector('.img-upload__preview img'); // (remove)
 const sliderContainerElement = modalElement.querySelector('.img-upload__effect-level');
 const sliderElement = modalElement.querySelector('.effect-level__slider');
 const effectValueElement = modalElement.querySelector('.effect-level__value');

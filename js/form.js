@@ -3,6 +3,7 @@ import { resetScale } from './scale.js';
 import { showSuccessMessage, showErrorMessage } from './message.js';
 import { sendData } from './load.js';
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const MAX_HASHTEG_COUNT = 5;
 
@@ -19,9 +20,11 @@ const SubmitButtonText = {
 
 const bodyElement = document.querySelector('body');
 const form = document.querySelector('.img-upload__form');
+const uploadFile = form.querySelector('.img-upload__input');
+const picturePreview = form.querySelector('.img-upload__preview img');
+const pictureEffectsPreview = document.querySelectorAll('.effects__preview');
 const overlayForm = form.querySelector('.img-upload__overlay');
 const closeForm = form.querySelector('.img-upload__cancel');
-const uploadFile = form.querySelector('.img-upload__input');
 const textHashtags = form.querySelector('.text__hashtags');
 const textComments = form.querySelector('.text__description');
 const submitButton = form.querySelector('.img-upload__submit');
@@ -157,6 +160,23 @@ const addHandlerToForm = () => {
     closeFormModal();
   });
 };
+
+const showUploadPicture = () => {
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    picturePreview.src = URL.createObjectURL(file);
+    pictureEffectsPreview.forEach((preview) => {
+      preview.style.backgroundImage = `url('${picturePreview.src}')`;
+    });
+  }
+};
+
+uploadFile.addEventListener('change', () => {
+  openFormModal();
+  showUploadPicture();
+});
 
 //открытие модального окна формы
 const addHandlerToListener = () => {
