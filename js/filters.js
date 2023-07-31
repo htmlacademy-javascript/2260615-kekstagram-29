@@ -10,7 +10,7 @@ let currentFilterElement = Filters.DEFAULT;
 let pictures = [];
 
 //функция для определения наиболее популярных фотографий
-const sortByMoreDiscissed = (picture1, picture2) => picture2.comments.length - picture1.comments.length;
+const sortByMoreDiscissed = (pictureA, pictureB) => pictureB.comments.length - pictureA.comments.length;
 
 //функция для получения случайного значения
 const sortByRandomly = () => Math.random() - 0.5;
@@ -30,12 +30,13 @@ const getFilteredByPictires = () => {
 //функция для изменения фильтра при клике
 const setOnFilterClick = (callback) => {
   filterElement.addEventListener('click', (evt) => {
-    const clickedButton = evt.target;
 
-    if (!clickedButton.classList.contains('img-filters__button') || clickedButton === currentFilterElement) {
+    if (!evt.target.classList.contains('img-filters__button')) {
       return;
     }
-    if (clickedButton === currentFilterElement) {
+
+    const clickedButton = evt.target;
+    if (clickedButton.id === currentFilterElement) {
       return;
     }
 
@@ -48,10 +49,10 @@ const setOnFilterClick = (callback) => {
 };
 
 //функция инициализации фильтров
-const initFilter = (loaderPictures, callback) => {
+const initFilter = (loadedPictures, callback) => {
   filterElement.classList.remove('img-filters--inactive');
-  pictures = [...loaderPictures];
+  pictures = [...loadedPictures];
   setOnFilterClick(callback);
 };
 
-export { initFilter, getFilteredByPictires };
+export { initFilter, getFilteredByPictires,  setOnFilterClick };

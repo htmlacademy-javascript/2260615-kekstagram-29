@@ -6,8 +6,9 @@ import { debounce } from './util.js';
 import { initFilter, getFilteredByPictires } from './filters.js';
 
 const toDoGetData = getData(renderGallery, showAlert);
+const debounceRenderGalery = debounce(renderGallery);
 
-initFilter(toDoGetData, debounce);
+initFilter(toDoGetData, debounceRenderGalery);
 
 addHandlerToForm();
 
