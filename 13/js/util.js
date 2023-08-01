@@ -12,10 +12,10 @@ const getRandomInteger = (a, b) => {
 };
 
 const debounce = (callback, timeoutDelay = 500) => {
-  let timeOutID;
+  let timeoutID;
   return (...rest) => {
-    clearTimeout(timeOutID);
-    timeOutID = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+    clearTimeout(timeoutID);
+    timeoutID = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 };
 

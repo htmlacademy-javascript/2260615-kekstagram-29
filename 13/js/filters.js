@@ -1,4 +1,4 @@
-const PICTURES_COUNT = 10;
+const PICTURES_COUNT = 25;
 const Filters = {
   DEFAULT: 'filter-default',
   RANDOM: 'filter-random',
@@ -18,12 +18,12 @@ const sortByRandomly = () => Math.random() - 0.5;
 //функция для получения характеристик для фильтра
 const getFilteredByPictires = () => {
   switch (currentFilterElement) {
-    case Filters.DEFAULT:
-      return [...pictures];
     case Filters.RANDOM:
       return [...pictures].sort(sortByRandomly).slice(0, PICTURES_COUNT);
     case Filters.DISCUSSED:
       return [...pictures].sort(sortByMoreDiscissed);
+    case Filters.DEFAULT:
+      return [...pictures];
   }
 };
 
@@ -55,4 +55,4 @@ const initFilter = (loadedPictures, callback) => {
   setOnFilterClick(callback);
 };
 
-export { initFilter, getFilteredByPictires,  setOnFilterClick };
+export { initFilter, getFilteredByPictires, setOnFilterClick };

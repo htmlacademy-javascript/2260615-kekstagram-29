@@ -26,6 +26,7 @@ const createThumbnail = ({ url, description, likes, comments, id }) => {
 
 //функция для заполнения шаблона
 const renderThumbnails = (pictures) => {
+  container.querySelectorAll('.picture').forEach((element) => element.remove());
   const fragment = document.createDocumentFragment();
 
   pictures.forEach((picture) => {
