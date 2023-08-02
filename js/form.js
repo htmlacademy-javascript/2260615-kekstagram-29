@@ -114,7 +114,7 @@ const openFormModal = () => {
   initEffects();
 };
 
-//функция
+//функция для открытия
 const onOpenFormModal = () => {
   openFormModal();
 };
