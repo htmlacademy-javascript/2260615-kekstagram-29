@@ -1,6 +1,6 @@
 import { initEffects, resetEffects } from './effects.js';
 import { resetScale } from './scale.js';
-import { showSuccessMessage, showErrorMessage } from './message.js';
+import { showSuccessMessage, showErrorMessage, showAlert } from './message.js';
 import { sendData } from './load.js';
 import { isEscapeKey } from './util.js';
 
@@ -145,18 +145,19 @@ const addHandlerToForm = () => {
     evt.preventDefault();
 
     const isValid = pristine.validate();
+    const showAndClose = () => {
+      showSuccessMessage();
+          closeFormModal();
+    }
     if (!isValid) {
       blockSubmitButton();
       showErrorMessage();
     } else {
       unBlockSubmitButton();
       sendData(new FormData(form),
-        () => {
-          showSuccessMessage();
-          closeFormModal();
-        },
-      );
-    }
+      showAndClose,
+      showAlert,
+      )}
     unBlockSubmitButton();
   });
 };

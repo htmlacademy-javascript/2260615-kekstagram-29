@@ -27,6 +27,9 @@ const load = (onSuccess, onError) => (route, textOfError, method = Method.GET, b
       if(!response.ok) {
         throw new Error(response.statusText);
       }
+      // if(!body == null && method === Method.POST){
+      //   throw new Error(response.statusText);
+      // }
       return response.json();
     })
     .then ((data) => {
