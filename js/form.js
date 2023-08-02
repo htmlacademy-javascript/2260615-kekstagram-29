@@ -153,12 +153,12 @@ const addHandlerToForm = () => {
       blockSubmitButton();
       showErrorMessage();
     } else {
-        unBlockSubmitButton();
-        sendData(new FormData(form),
+      unBlockSubmitButton();
+      sendData(new FormData(form),
         showAndClose,
         showAlert,
-        )
-      }
+      );
+    }
     unBlockSubmitButton();
   });
 };
