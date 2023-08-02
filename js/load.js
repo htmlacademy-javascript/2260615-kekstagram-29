@@ -36,7 +36,6 @@ const load = (onSuccess, onError) => (route, textOfError, method = Method.GET, b
       onError(textOfError);
     });
 
-
 //функция получения данных
 const getData = (onSuccess, onError) => load(onSuccess, onError)(Route.GET_DATA, TextOfError.GET_DATA);
 
