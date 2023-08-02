@@ -147,17 +147,18 @@ const addHandlerToForm = () => {
     const isValid = pristine.validate();
     const showAndClose = () => {
       showSuccessMessage();
-          closeFormModal();
-    }
+      closeFormModal();
+    };
     if (!isValid) {
       blockSubmitButton();
       showErrorMessage();
     } else {
-      unBlockSubmitButton();
-      sendData(new FormData(form),
-      showAndClose,
-      showAlert,
-      )}
+        unBlockSubmitButton();
+        sendData(new FormData(form),
+        showAndClose,
+        showAlert,
+        )
+      }
     unBlockSubmitButton();
   });
 };
